@@ -8,10 +8,12 @@
 
 import UIKit
 import AVKit
+import os
 
 class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
     
     static let reuseIdentifer = "MiniGalleryCollectionViewCoverCell"
+    
     var currentModel: GalleryItem?
     
     @IBOutlet weak var coverImageView: UIImageView!
@@ -20,7 +22,7 @@ class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
         // test image cache
         currentModel = model
         loadImage(imageUrl: model.imageUrl) { [weak self] (url, image) in
-            if self!.currentModel?.imageUrl == url {
+            if self?.currentModel?.imageUrl == url {
                 DispatchQueue.main.async {
                     self?.coverImageView.image = image
                 }
@@ -51,8 +53,6 @@ class MiniGalleryViewModel {
 
 class MiniGalleryViewController: UIViewController {
     
-    
-    
     weak var pageController: MiniGalleryVideoPageViewController?
     
     lazy var viewModel = MiniGalleryViewModel()
@@ -76,16 +76,6 @@ class MiniGalleryViewController: UIViewController {
     func set(items: [GalleryItem]) {
         viewModel.items = items
     }
-        
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MiniGalleryCollectionViewCoverCell.reuseIdentifer, for: indexPath) as! MiniGalleryCollectionViewCoverCell
-        viewModel.item(at: indexPath.row).flatMap { cell.bind(model: $0)}
-        return cell
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +87,9 @@ class MiniGalleryViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.decelerationRate = .fast
+        DispatchQueue.main.async {
+            self.select(at: IndexPath.init(row: 0, section: 0), selectPage: false)
+        }
     }
     
     func select(at indexPath: IndexPath, selectPage: Bool = true) {
@@ -132,6 +125,17 @@ class MiniGalleryViewController: UIViewController {
 }
 
 extension MiniGalleryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.items.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MiniGalleryCollectionViewCoverCell.reuseIdentifer, for: indexPath) as! MiniGalleryCollectionViewCoverCell
+        viewModel.item(at: indexPath.row).flatMap { cell.bind(model: $0)}
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let marginWidth = collectionView.layoutMarginsGuide.layoutFrame.width
         let height = collectionView.layoutMarginsGuide.layoutFrame.height
@@ -141,14 +145,6 @@ extension MiniGalleryViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-        if let indexPath = collectionView.indexPathForItem(at: proposedContentOffset) {
-            let width = collectionView.layoutMarginsGuide.layoutFrame.width / 2
-            return CGPoint.init(x: width * CGFloat(indexPath.row) - collectionView.frame.width / 4, y: proposedContentOffset.y)
-        }
-        return proposedContentOffset
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -163,21 +159,6 @@ extension MiniGalleryViewController: UICollectionViewDataSource, UICollectionVie
             let width = collectionView.layoutMarginsGuide.layoutFrame.width / 2
             let point = CGPoint.init(x: width * CGFloat(offsetIndex) - collectionView.frame.width / 4, y: proposedContentOffset.y)
             targetContentOffset.pointee = point
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let collectionView = scrollView as? UICollectionView else { return }
-        let offsetIndex = Int(round(collectionView.contentOffset.x / (collectionView.frame.width / 2) + 0.5))
-        debugPrint(offsetIndex)
-        select(at: IndexPath.init(row: offsetIndex, section: 0))
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            guard let collectionView = scrollView as? UICollectionView else { return }
-            let offsetIndex = Int(round(collectionView.contentOffset.x / (collectionView.frame.width / 2) + 0.5))
-            debugPrint(offsetIndex)
             select(at: IndexPath.init(row: offsetIndex, section: 0))
         }
     }
