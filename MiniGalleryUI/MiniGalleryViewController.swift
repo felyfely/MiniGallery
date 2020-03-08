@@ -19,23 +19,10 @@ class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
     func bind(model: GalleryItem) {
         // test image cache
         currentModel = model
-        if let image = imageCache.object(forKey: model.imageUrl.absoluteString as NSString) {
-            self.coverImageView.image = image
-        } else {
-            DispatchQueue.global().async {
-                [weak self] in
-                do {
-                    let data = try Data(contentsOf: model.imageUrl)
-                    if let image = UIImage(data: data) {
-                        imageCache.setObject(image, forKey: model.imageUrl.absoluteString as NSString)
-                        if self?.currentModel?.imageUrl.absoluteString == model.imageUrl.absoluteString {
-                            DispatchQueue.main.async {
-                                self?.coverImageView.image = image
-                            }
-                        }
-                    }
-                } catch {
-                    debugPrint(error.localizedDescription)
+        loadImage(imageUrl: model.imageUrl) { [weak self] (url, image) in
+            if self!.currentModel?.imageUrl == url {
+                DispatchQueue.main.async {
+                    self?.coverImageView.image = image
                 }
             }
         }
@@ -48,45 +35,112 @@ class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
     }
 }
 
-class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MiniGalleryViewModel {
+    var items = [GalleryItem]()
+    func item(at index: Int) -> GalleryItem? {
+        if index >= 0, index < items.count {
+            return items[index]
+        }
+        return nil
+    }
     
-    var lastSelectedIndexPath: IndexPath?
+    func index(of item: GalleryItem) -> Int? {
+        return items.firstIndex(of: item)
+    }
+}
+
+class MiniGalleryViewController: UIViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    
+    
     weak var pageController: MiniGalleryVideoPageViewController?
     
-    var items = [GalleryItem]()
+    lazy var viewModel = MiniGalleryViewModel()
     
+    var lastSelectedIndexPath: IndexPath?
     
     var flowLayout: UICollectionViewFlowLayout? {
         return collectionView.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let pageController = segue.destination as? MiniGalleryVideoPageViewController {
             self.pageController = pageController
             pageController.selectionDelegate = self
-            pageController.set(items: items)
+            pageController.set(items: viewModel.items)
         }
     }
     
+    func set(items: [GalleryItem]) {
+        viewModel.items = items
+    }
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return viewModel.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MiniGalleryCollectionViewCoverCell.reuseIdentifer, for: indexPath) as! MiniGalleryCollectionViewCoverCell
-        cell.bind(model: items[indexPath.row])
+        viewModel.item(at: indexPath.row).flatMap { cell.bind(model: $0)}
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpCollectionView()
+        // Do any additional setup after loading the view.
+    }
+    
+    func setUpCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.decelerationRate = .fast
-        // Do any additional setup after loading the view.
+    }
+    
+    func select(at indexPath: IndexPath, selectPage: Bool = true) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        guard indexPath != lastSelectedIndexPath else { return }
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            UIView.animate(withDuration: 0.25) {
+                cell.transform = .init(scaleX: 1.2, y: 1.2)
+            }
+        }
+        if let lastIndexPath = lastSelectedIndexPath, let lastCell = collectionView.cellForItem(at: lastIndexPath) {
+            UIView.animate(withDuration: 0.25) {
+                lastCell.transform = .identity
+            }
+        }
+        
+        if selectPage, let item = viewModel.item(at: indexPath.row) {
+            pageController?.select(at: item, forward: indexPath.row > (lastSelectedIndexPath?.row ?? 0))
+        }
+        lastSelectedIndexPath = indexPath
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        flowLayout?.invalidateLayout()
+        collectionView.contentInset = .init(top: 0, left: collectionView.frame.width / 4, bottom: 0, right: collectionView.frame.width / 4)
+    }
+    
+    static func loadFromStoryboard() -> Self {
+        let storyboard = UIStoryboard.init(name: "MiniGalleryUI", bundle: currentBundle)
+        return storyboard.instantiateViewController(withIdentifier: "MiniGalleryViewController") as! Self
+    }
+}
+
+extension MiniGalleryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let marginWidth = collectionView.layoutMarginsGuide.layoutFrame.width
+        let height = collectionView.layoutMarginsGuide.layoutFrame.height
+        let width = marginWidth / 2
+        return CGSize.init(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
@@ -127,151 +181,12 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
             select(at: IndexPath.init(row: offsetIndex, section: 0))
         }
     }
-    
-    func select(at indexPath: IndexPath, selectPage: Bool = true) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        if indexPath != lastSelectedIndexPath {
-            if let cell = collectionView.cellForItem(at: indexPath) {
-                UIView.animate(withDuration: 0.25) {
-                    cell.transform = .init(scaleX: 1.2, y: 1.2)
-                }
-            }
-            if let lastIndexPath = lastSelectedIndexPath, let lastCell = collectionView.cellForItem(at: lastIndexPath) {
-                UIView.animate(withDuration: 0.25) {
-                    lastCell.transform = .identity
-                }
-            }
-            
-            if selectPage {
-                let item = items[indexPath.row]
-                pageController?.select(at: item, forward: indexPath.row > (lastSelectedIndexPath?.row ?? 0))
-            }
-            lastSelectedIndexPath = indexPath
-            
-        }
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        flowLayout?.invalidateLayout()
-        collectionView.contentInset = .init(top: 0, left: collectionView.frame.width / 4, bottom: 0, right: collectionView.frame.width / 4)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let marginWidth = collectionView.layoutMarginsGuide.layoutFrame.width
-        let height = collectionView.layoutMarginsGuide.layoutFrame.height
-        let width = marginWidth / 2
-        return CGSize.init(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-    }
-    
-    static func loadFromStoryboard() -> Self {
-        let storyboard = UIStoryboard.init(name: "MiniGalleryUI", bundle: currentBundle)
-        return storyboard.instantiateViewController(withIdentifier: "MiniGalleryViewController") as! Self
-    }
 }
 
 extension MiniGalleryViewController: GalleryPageSelectionDelegate {
     func didSelect(at item: GalleryItem) {
-        if let index = items.firstIndex(of: item) {
+        if let index = viewModel.index(of: item) {
             select(at: IndexPath.init(row: index, section: 0), selectPage: false)
         }
-    }
-}
-
-protocol GalleryPageSelectionDelegate: class {
-    func didSelect(at item: GalleryItem)
-}
-
-class MiniGalleryVideoPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    
-    weak var selectionDelegate: GalleryPageSelectionDelegate?
-    
-    private var items = [GalleryItem]()
-        
-    func select(at item: GalleryItem, forward: Bool) {
-        let videoPlayerController = MiniGalleryVideoPlayerController.init(item: item)
-        setViewControllers([videoPlayerController], direction: forward ? .forward : .reverse, animated: true, completion: nil)
-    }
-    
-    func next(of item: GalleryItem) -> GalleryItem? {
-        if let index = items.firstIndex(of: item), (index + 1) < items.count {
-            return items[index + 1]
-        }
-        return nil
-    }
-    
-    func previous(of item: GalleryItem) -> GalleryItem? {
-        if let index = items.firstIndex(of: item), (index - 1) >= 0 {
-            return items[index - 1]
-        }
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        if let controller = viewController as? MiniGalleryVideoPlayerController, let previousItem = previous(of: controller.item) {
-            return MiniGalleryVideoPlayerController.init(item: previousItem)
-        }
-        return nil
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        if let controller = viewController as? MiniGalleryVideoPlayerController, let nextItem = next(of: controller.item) {
-            return MiniGalleryVideoPlayerController.init(item: nextItem)
-        }
-        return nil
-    }
-        
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if let viewController = viewControllers?.first as? MiniGalleryVideoPlayerController {
-            selectionDelegate?.didSelect(at: viewController.item)
-        }
-        
-    }
-    
-    func set(items: [GalleryItem]) {
-        self.items = items
-        if let firstItem = items.first {
-            let playerVc = MiniGalleryVideoPlayerController.init(item: firstItem)
-            setViewControllers([playerVc], direction: .forward, animated: false, completion: nil)
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        dataSource = self
-        delegate = self
-       
-        
-    }
-    
-}
-
-class MiniGalleryVideoPlayerController: AVPlayerViewController {
-    let item: GalleryItem
-    private var playerLooper: AVPlayerLooper?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        videoGravity = .resizeAspectFill
-        showsPlaybackControls = false
-        let queuePlayer = AVQueuePlayer()
-        let playerItem = AVPlayerItem(url: item.videoUrl)
-        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
-        player = queuePlayer
-        player?.play()
-    }
-    
-    init(item: GalleryItem) {
-        self.item = item
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -19,6 +19,9 @@
 		5BFED6C6241522F100E8E62F /* MiniGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */; };
 		5BFED6C82415231900E8E62F /* MiniGalleryUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */; };
 		5BFED6CA241523B800E8E62F /* MiniGalleryUIServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */; };
+		5BFED6CC241535B600E8E62F /* MiniGalleryVideoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFED6CB241535B600E8E62F /* MiniGalleryVideoPageViewController.swift */; };
+		5BFED6CE241535F700E8E62F /* MiniGalleryVideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFED6CD241535F700E8E62F /* MiniGalleryVideoPlayerController.swift */; };
+		5BFED6D0241537AD00E8E62F /* MiniGalleryUIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFED6CF241537AD00E8E62F /* MiniGalleryUIUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,9 @@
 		5BFED6BC241522AF00E8E62F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MiniGalleryUI.storyboard; sourceTree = "<group>"; };
 		5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryUIServiceProvider.swift; sourceTree = "<group>"; };
+		5BFED6CB241535B600E8E62F /* MiniGalleryVideoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryVideoPageViewController.swift; sourceTree = "<group>"; };
+		5BFED6CD241535F700E8E62F /* MiniGalleryVideoPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryVideoPlayerController.swift; sourceTree = "<group>"; };
+		5BFED6CF241537AD00E8E62F /* MiniGalleryUIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryUIUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +123,10 @@
 			isa = PBXGroup;
 			children = (
 				5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */,
+				5BFED6CB241535B600E8E62F /* MiniGalleryVideoPageViewController.swift */,
+				5BFED6CD241535F700E8E62F /* MiniGalleryVideoPlayerController.swift */,
 				5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */,
+				5BFED6CF241537AD00E8E62F /* MiniGalleryUIUtils.swift */,
 				5BFED6BB241522AF00E8E62F /* MiniGalleryUI.h */,
 				5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */,
 				5BFED6BC241522AF00E8E62F /* Info.plist */,
@@ -249,7 +258,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFED6D0241537AD00E8E62F /* MiniGalleryUIUtils.swift in Sources */,
+				5BFED6CC241535B600E8E62F /* MiniGalleryVideoPageViewController.swift in Sources */,
 				5BFED6CA241523B800E8E62F /* MiniGalleryUIServiceProvider.swift in Sources */,
+				5BFED6CE241535F700E8E62F /* MiniGalleryVideoPlayerController.swift in Sources */,
 				5BFED6C6241522F100E8E62F /* MiniGalleryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
