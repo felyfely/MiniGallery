@@ -13,6 +13,7 @@
 		5B1B93C12414C062006C8B3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93BF2414C062006C8B3F /* Main.storyboard */; };
 		5B1B93C32414C063006C8B3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93C22414C063006C8B3F /* Assets.xcassets */; };
 		5B1B93C62414C063006C8B3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93C42414C063006C8B3F /* LaunchScreen.storyboard */; };
+		5B1B93CE2414DEBE006C8B3F /* MiniGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		5B1B93C22414C063006C8B3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B1B93C52414C063006C8B3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B1B93C72414C063006C8B3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				5B1B93B92414C062006C8B3F /* AppDelegate.swift */,
 				5B1B93BB2414C062006C8B3F /* SceneDelegate.swift */,
 				5B1B93BD2414C062006C8B3F /* ViewController.swift */,
+				5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */,
 				5B1B93BF2414C062006C8B3F /* Main.storyboard */,
 				5B1B93C22414C063006C8B3F /* Assets.xcassets */,
 				5B1B93C42414C063006C8B3F /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				5B1B93BE2414C062006C8B3F /* ViewController.swift in Sources */,
 				5B1B93BA2414C062006C8B3F /* AppDelegate.swift in Sources */,
+				5B1B93CE2414DEBE006C8B3F /* MiniGalleryViewController.swift in Sources */,
 				5B1B93BC2414C062006C8B3F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

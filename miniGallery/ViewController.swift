@@ -12,7 +12,6 @@ struct GalleryItem: Codable, Hashable {
     let id: Int
     let imageUrl: URL
     let videoUrl: URL
-    var typeId: String?
 }
 
 class VideoCell: UICollectionViewCell {
@@ -75,29 +74,29 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         reloadData()
     }
     
-    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, GalleryItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, GalleryItem>()
-        snapshot.appendSections([Section.video])
-        let videoItems = items.compactMap { (item) -> GalleryItem? in
-            var itemCopy = item
-            itemCopy.typeId = Section.video.rawValue
-            return itemCopy
-        }
-        snapshot.appendItems(videoItems, toSection: Section.video)
-        let coverItems = items.compactMap { (item) -> GalleryItem? in
-            var itemCopy = item
-            itemCopy.typeId = Section.cover.rawValue
-            return itemCopy
-        }
-        snapshot.appendSections([Section.cover])
-        snapshot.appendItems(coverItems, toSection: Section.cover)
-        
-        return snapshot
-    }
+//    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, GalleryItem> {
+//        var snapshot = NSDiffableDataSourceSnapshot<Section, GalleryItem>()
+//        snapshot.appendSections([Section.video])
+//        let videoItems = items.compactMap { (item) -> GalleryItem? in
+//            var itemCopy = item
+//            itemCopy.typeId = Section.video.rawValue
+//            return itemCopy
+//        }
+//        snapshot.appendItems(videoItems, toSection: Section.video)
+//        let coverItems = items.compactMap { (item) -> GalleryItem? in
+//            var itemCopy = item
+//            itemCopy.typeId = Section.cover.rawValue
+//            return itemCopy
+//        }
+//        snapshot.appendSections([Section.cover])
+//        snapshot.appendItems(coverItems, toSection: Section.cover)
+//
+//        return snapshot
+//    }
     
     func reloadData() {
-        let snapshot = snapshotForCurrentState()
-        dataSource.apply(snapshot, animatingDifferences: true)
+//        let snapshot = snapshotForCurrentState()
+//        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     func queryItems() {
