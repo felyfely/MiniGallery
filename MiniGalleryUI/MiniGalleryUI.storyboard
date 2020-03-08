@@ -54,6 +54,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="igb-cG-KfI">
                                                             <rect key="frame" x="-30.5" y="20.5" width="240" height="128"/>
+                                                            <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="igb-cG-KfI" secondAttribute="height" multiplier="3:4" id="iB0-dl-5sJ"/>
                                                                 <constraint firstAttribute="height" constant="128" id="kwq-8X-nB5"/>

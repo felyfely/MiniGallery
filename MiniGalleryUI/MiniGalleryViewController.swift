@@ -12,24 +12,27 @@ import AVKit
 class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
     
     static let reuseIdentifer = "MiniGalleryCollectionViewCoverCell"
+    var currentModel: GalleryItem?
     
     @IBOutlet weak var coverImageView: UIImageView!
     
     func bind(model: GalleryItem) {
         // test image cache
-        if let data = UserDefaults.standard.data(forKey: model.imageUrl.absoluteString) {
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                self.coverImageView.image = image
-            }
+        currentModel = model
+        if let image = imageCache.object(forKey: model.imageUrl.absoluteString as NSString) {
+            self.coverImageView.image = image
         } else {
             DispatchQueue.global().async {
+                [weak self] in
                 do {
                     let data = try Data(contentsOf: model.imageUrl)
-                    UserDefaults.standard.set(data, forKey: model.imageUrl.absoluteString)
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async {
-                        self.coverImageView.image = image
+                    if let image = UIImage(data: data) {
+                        imageCache.setObject(image, forKey: model.imageUrl.absoluteString as NSString)
+                        if self?.currentModel?.imageUrl.absoluteString == model.imageUrl.absoluteString {
+                            DispatchQueue.main.async {
+                                self?.coverImageView.image = image
+                            }
+                        }
                     }
                 } catch {
                     debugPrint(error.localizedDescription)
@@ -64,6 +67,7 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         if let pageController = segue.destination as? MiniGalleryVideoPageViewController {
             self.pageController = pageController
             pageController.selectionDelegate = self
+            pageController.set(items: items)
         }
     }
     
@@ -147,11 +151,6 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         }
         
     }
-        
-    func updateUI() {
-        collectionView.reloadData()
-        pageController?.items = items
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -192,15 +191,8 @@ class MiniGalleryVideoPageViewController: UIPageViewController, UIPageViewContro
     
     weak var selectionDelegate: GalleryPageSelectionDelegate?
     
-    var items = [GalleryItem]() {
-        didSet {
-            if let firstItem = items.first {
-                let playerVc = MiniGalleryVideoPlayerController.init(item: firstItem)
-                setViewControllers([playerVc], direction: .forward, animated: false, completion: nil)
-            }
-        }
-    }
-    
+    private var items = [GalleryItem]()
+        
     func select(at item: GalleryItem, forward: Bool) {
         let videoPlayerController = MiniGalleryVideoPlayerController.init(item: item)
         setViewControllers([videoPlayerController], direction: forward ? .forward : .reverse, animated: true, completion: nil)
@@ -241,10 +233,20 @@ class MiniGalleryVideoPageViewController: UIPageViewController, UIPageViewContro
         
     }
     
+    func set(items: [GalleryItem]) {
+        self.items = items
+        if let firstItem = items.first {
+            let playerVc = MiniGalleryVideoPlayerController.init(item: firstItem)
+            setViewControllers([playerVc], direction: .forward, animated: false, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
         delegate = self
+       
+        
     }
     
 }
