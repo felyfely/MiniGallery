@@ -11,8 +11,10 @@ import AVKit
 
 class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
     
-    @IBOutlet weak var coverImageView: UIImageView!
     static let reuseIdentifer = "MiniGalleryCollectionViewCoverCell"
+    
+    @IBOutlet weak var coverImageView: UIImageView!
+    
     func bind(model: GalleryItem) {
         // test image cache
         if let data = UserDefaults.standard.data(forKey: model.imageUrl.absoluteString) {
@@ -45,7 +47,6 @@ class MiniGalleryCollectionViewCoverCell: UICollectionViewCell {
 
 class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let urlQueryCacheKey = "urlQueryKey"
     var lastSelectedIndexPath: IndexPath?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -58,7 +59,6 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         return collectionView.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
-    let endPointUrl = URL(string: "https://private-04a55-videoplayer1.apiary-mock.com/pictures")!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let pageController = segue.destination as? MiniGalleryVideoPageViewController {
@@ -83,7 +83,6 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         collectionView.delegate = self
         collectionView.decelerationRate = .fast
         // Do any additional setup after loading the view.
-        queryItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
@@ -101,9 +100,10 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard let collectionView = scrollView as? UICollectionView else { return }
         let proposedContentOffset = targetContentOffset.pointee
-        if let indexPath = collectionView.indexPathForItem(at: proposedContentOffset) {
+        let offsetIndex = Int(round(proposedContentOffset.x / (collectionView.frame.width / 2) + 0.5))
+        if offsetIndex >= 0 {
             let width = collectionView.layoutMarginsGuide.layoutFrame.width / 2
-            let point = CGPoint.init(x: width * CGFloat(indexPath.row) - collectionView.frame.width / 4, y: proposedContentOffset.y)
+            let point = CGPoint.init(x: width * CGFloat(offsetIndex) - collectionView.frame.width / 4, y: proposedContentOffset.y)
             targetContentOffset.pointee = point
         }
     }
@@ -129,7 +129,7 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         if indexPath != lastSelectedIndexPath {
             if let cell = collectionView.cellForItem(at: indexPath) {
                 UIView.animate(withDuration: 0.25) {
-                    cell.transform = .init(scaleX: 1.1, y: 1.1)
+                    cell.transform = .init(scaleX: 1.2, y: 1.2)
                 }
             }
             if let lastIndexPath = lastSelectedIndexPath, let lastCell = collectionView.cellForItem(at: lastIndexPath) {
@@ -147,35 +147,7 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
         }
         
     }
-    
-    func queryItems() {
-        if let data = UserDefaults.standard.data(forKey: urlQueryCacheKey), let items = try? JSONDecoder.init().decode([GalleryItem].self, from: data) {
-            self.items = items
-            collectionView.reloadData()
-        }
         
-        let request = URLRequest(url: endPointUrl)
-        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) in
-            guard let `self` = self else { return }
-            if let data = data {
-                do {
-                    // Convert the data to JSON
-                    let items = try JSONDecoder.init().decode([GalleryItem].self, from: data)
-                    UserDefaults.standard.set(data, forKey: self.urlQueryCacheKey)
-                    self.items = items
-                    DispatchQueue.main.async {
-                        self.updateUI()
-                    }
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-            } else if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        task.resume()
-    }
-    
     func updateUI() {
         collectionView.reloadData()
         pageController?.items = items
@@ -196,6 +168,11 @@ class MiniGalleryViewController: UIViewController, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+    
+    static func loadFromStoryboard() -> Self {
+        let storyboard = UIStoryboard.init(name: "MiniGalleryUI", bundle: currentBundle)
+        return storyboard.instantiateViewController(withIdentifier: "MiniGalleryViewController") as! Self
     }
 }
 

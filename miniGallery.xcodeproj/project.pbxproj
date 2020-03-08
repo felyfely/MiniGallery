@@ -13,8 +13,37 @@
 		5B1B93C12414C062006C8B3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93BF2414C062006C8B3F /* Main.storyboard */; };
 		5B1B93C32414C063006C8B3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93C22414C063006C8B3F /* Assets.xcassets */; };
 		5B1B93C62414C063006C8B3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B1B93C42414C063006C8B3F /* LaunchScreen.storyboard */; };
-		5B1B93CE2414DEBE006C8B3F /* MiniGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */; };
+		5BFED6BD241522AF00E8E62F /* MiniGalleryUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFED6BB241522AF00E8E62F /* MiniGalleryUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5BFED6C0241522AF00E8E62F /* MiniGalleryUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFED6B9241522AF00E8E62F /* MiniGalleryUI.framework */; };
+		5BFED6C1241522AF00E8E62F /* MiniGalleryUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BFED6B9241522AF00E8E62F /* MiniGalleryUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5BFED6C6241522F100E8E62F /* MiniGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */; };
+		5BFED6C82415231900E8E62F /* MiniGalleryUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */; };
+		5BFED6CA241523B800E8E62F /* MiniGalleryUIServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5BFED6BE241522AF00E8E62F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B1B93AE2414C062006C8B3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BFED6B8241522AF00E8E62F;
+			remoteInfo = MiniGalleryUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5BFED6C2241522AF00E8E62F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5BFED6C1241522AF00E8E62F /* MiniGalleryUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5B1B93B62414C062006C8B3F /* miniGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = miniGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,10 +55,23 @@
 		5B1B93C52414C063006C8B3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B1B93C72414C063006C8B3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryViewController.swift; sourceTree = "<group>"; };
+		5BFED6B9241522AF00E8E62F /* MiniGalleryUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MiniGalleryUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BFED6BB241522AF00E8E62F /* MiniGalleryUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniGalleryUI.h; sourceTree = "<group>"; };
+		5BFED6BC241522AF00E8E62F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MiniGalleryUI.storyboard; sourceTree = "<group>"; };
+		5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGalleryUIServiceProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5B1B93B32414C062006C8B3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFED6C0241522AF00E8E62F /* MiniGalleryUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BFED6B6241522AF00E8E62F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				5B1B93B82414C062006C8B3F /* miniGallery */,
+				5BFED6BA241522AF00E8E62F /* MiniGalleryUI */,
 				5B1B93B72414C062006C8B3F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				5B1B93B62414C062006C8B3F /* miniGallery.app */,
+				5BFED6B9241522AF00E8E62F /* MiniGalleryUI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,7 +105,6 @@
 				5B1B93B92414C062006C8B3F /* AppDelegate.swift */,
 				5B1B93BB2414C062006C8B3F /* SceneDelegate.swift */,
 				5B1B93BD2414C062006C8B3F /* ViewController.swift */,
-				5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */,
 				5B1B93BF2414C062006C8B3F /* Main.storyboard */,
 				5B1B93C22414C063006C8B3F /* Assets.xcassets */,
 				5B1B93C42414C063006C8B3F /* LaunchScreen.storyboard */,
@@ -70,7 +113,30 @@
 			path = miniGallery;
 			sourceTree = "<group>";
 		};
+		5BFED6BA241522AF00E8E62F /* MiniGalleryUI */ = {
+			isa = PBXGroup;
+			children = (
+				5B1B93CD2414DEBE006C8B3F /* MiniGalleryViewController.swift */,
+				5BFED6C9241523B800E8E62F /* MiniGalleryUIServiceProvider.swift */,
+				5BFED6BB241522AF00E8E62F /* MiniGalleryUI.h */,
+				5BFED6C72415231900E8E62F /* MiniGalleryUI.storyboard */,
+				5BFED6BC241522AF00E8E62F /* Info.plist */,
+			);
+			path = MiniGalleryUI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5BFED6B4241522AF00E8E62F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFED6BD241522AF00E8E62F /* MiniGalleryUI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		5B1B93B52414C062006C8B3F /* miniGallery */ = {
@@ -80,15 +146,35 @@
 				5B1B93B22414C062006C8B3F /* Sources */,
 				5B1B93B32414C062006C8B3F /* Frameworks */,
 				5B1B93B42414C062006C8B3F /* Resources */,
+				5BFED6C2241522AF00E8E62F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5BFED6BF241522AF00E8E62F /* PBXTargetDependency */,
 			);
 			name = miniGallery;
 			productName = miniGallery;
 			productReference = 5B1B93B62414C062006C8B3F /* miniGallery.app */;
 			productType = "com.apple.product-type.application";
+		};
+		5BFED6B8241522AF00E8E62F /* MiniGalleryUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BFED6C5241522AF00E8E62F /* Build configuration list for PBXNativeTarget "MiniGalleryUI" */;
+			buildPhases = (
+				5BFED6B4241522AF00E8E62F /* Headers */,
+				5BFED6B5241522AF00E8E62F /* Sources */,
+				5BFED6B6241522AF00E8E62F /* Frameworks */,
+				5BFED6B7241522AF00E8E62F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MiniGalleryUI;
+			productName = MiniGalleryUI;
+			productReference = 5BFED6B9241522AF00E8E62F /* MiniGalleryUI.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -101,6 +187,9 @@
 				ORGANIZATIONNAME = "付 旦";
 				TargetAttributes = {
 					5B1B93B52414C062006C8B3F = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					5BFED6B8241522AF00E8E62F = {
 						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
@@ -119,6 +208,7 @@
 			projectRoot = "";
 			targets = (
 				5B1B93B52414C062006C8B3F /* miniGallery */,
+				5BFED6B8241522AF00E8E62F /* MiniGalleryUI */,
 			);
 		};
 /* End PBXProject section */
@@ -134,6 +224,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BFED6B7241522AF00E8E62F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFED6C82415231900E8E62F /* MiniGalleryUI.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -143,12 +241,28 @@
 			files = (
 				5B1B93BE2414C062006C8B3F /* ViewController.swift in Sources */,
 				5B1B93BA2414C062006C8B3F /* AppDelegate.swift in Sources */,
-				5B1B93CE2414DEBE006C8B3F /* MiniGalleryViewController.swift in Sources */,
 				5B1B93BC2414C062006C8B3F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BFED6B5241522AF00E8E62F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFED6CA241523B800E8E62F /* MiniGalleryUIServiceProvider.swift in Sources */,
+				5BFED6C6241522F100E8E62F /* MiniGalleryViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5BFED6BF241522AF00E8E62F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5BFED6B8241522AF00E8E62F /* MiniGalleryUI */;
+			targetProxy = 5BFED6BE241522AF00E8E62F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5B1B93BF2414C062006C8B3F /* Main.storyboard */ = {
@@ -287,6 +401,7 @@
 		5B1B93CB2414C063006C8B3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T93947JGD5;
@@ -305,6 +420,7 @@
 		5B1B93CC2414C063006C8B3F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T93947JGD5;
@@ -317,6 +433,60 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5BFED6C3241522AF00E8E62F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = T93947JGD5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MiniGalleryUI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danfu.MiniGalleryUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5BFED6C4241522AF00E8E62F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = T93947JGD5;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MiniGalleryUI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danfu.MiniGalleryUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -337,6 +507,15 @@
 			buildConfigurations = (
 				5B1B93CB2414C063006C8B3F /* Debug */,
 				5B1B93CC2414C063006C8B3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5BFED6C5241522AF00E8E62F /* Build configuration list for PBXNativeTarget "MiniGalleryUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BFED6C3241522AF00E8E62F /* Debug */,
+				5BFED6C4241522AF00E8E62F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
