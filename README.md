@@ -16,5 +16,8 @@ If you want to update to latest depedency library, run
 [MiniGalleryUI](https://github.com/felyfely/MiniGalleryUI)
 Notice that if you swipe really fast on the bottom coverflow page, the top video portion of the UIElement will skip right to the desired video without loading any of the intermediate videos
 
+[DataSynchronization](https://github.com/felyfely/DataSynchronization)
+A very lightweight network data layer
+
 ### Known issue if doesn't run on 13.3.1 real device
 <https://stackoverflow.com/questions/46704524/dyld-library-not-loaded-reason-no-suitable-image-found>

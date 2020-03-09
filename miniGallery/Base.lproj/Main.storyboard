@@ -15,6 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xo3-PW-ywk">
+                                <rect key="frame" x="186" y="431" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5AT-Pw-6od">
                                 <rect key="frame" x="165" y="460" width="84" height="30"/>
                                 <state key="normal" title="Query Items"/>
@@ -27,10 +33,15 @@
                         <constraints>
                             <constraint firstItem="5AT-Pw-6od" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Fqf-n8-tw0"/>
                             <constraint firstItem="5AT-Pw-6od" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Vl0-m4-RkY"/>
+                            <constraint firstItem="5AT-Pw-6od" firstAttribute="top" secondItem="xo3-PW-ywk" secondAttribute="bottom" constant="8" symbolic="YES" id="mG7-Dl-knW"/>
+                            <constraint firstItem="xo3-PW-ywk" firstAttribute="centerX" secondItem="5AT-Pw-6od" secondAttribute="centerX" id="rfA-i1-cpC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="NSY-Vc-DId"/>
+                    <connections>
+                        <outlet property="statusLabel" destination="xo3-PW-ywk" id="Npe-5L-gyT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

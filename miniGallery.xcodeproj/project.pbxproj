@@ -183,6 +183,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/MiniGalleryUI.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/DataSynchronization.framework",
 			);
 			name = "Copy Carthage-built Frameworks";
 			outputFileListPaths = (

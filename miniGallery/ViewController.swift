@@ -8,12 +8,26 @@
 
 import UIKit
 import MiniGalleryUI
+import DataSynchronization
+import os
 
-let endPointUrl = URL(string: "https://private-04a55-videoplayer1.apiary-mock.com/pictures")!
-let urlQueryCacheKey = "urlQueryCacheKey"
+extension DataRequestable {
+    /// if host is common
+    var host: String {
+        return "https://private-04a55-videoplayer1.apiary-mock.com"
+    }
+}
+
+struct GalleryItemsQueryRequest: DataRequestable {
+    var path: String {
+        return "pictures"
+    }
+}
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var statusLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,30 +37,21 @@ class ViewController: UIViewController {
     }
     
     func queryItems() {
-        if let data = UserDefaults.standard.data(forKey: urlQueryCacheKey), let items = try? JSONDecoder.init().decode([GalleryItem].self, from: data) {
-            showGalleryUI(with: items)
-            return
-        }
-        
-        let request = URLRequest(url: endPointUrl)
-        let task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) in
-            guard let `self` = self else { return }
-            if let data = data {
-                do {
-                    // Convert the data to JSON
-                    let items = try JSONDecoder.init().decode([GalleryItem].self, from: data)
-                    UserDefaults.standard.set(data, forKey: urlQueryCacheKey)
-                    DispatchQueue.main.async {
-                        self.showGalleryUI(with: items)
-                    }
-                } catch let error as NSError {
-                    print(error.localizedDescription)
+        statusLabel.text = "Loading..."
+        GalleryItemsQueryRequest().request { [weak self] (result: Result<[GalleryItem], Error>) in
+            switch result {
+            case .success(let items):
+                DispatchQueue.main.async {
+                    self?.statusLabel.text = "Success !"
+                    self?.showGalleryUI(with: items)
                 }
-            } else if let error = error {
-                print(error.localizedDescription)
+            case .failure(let error):
+                os_log(.error, "@", error.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.statusLabel.text = error.localizedDescription
+                }
             }
         }
-        task.resume()
     }
     
     func showGalleryUI(with items: [GalleryItem]) {
@@ -54,5 +59,4 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(galleryUIViewController, animated: true)
     }
 
-    
 }
