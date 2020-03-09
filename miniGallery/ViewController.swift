@@ -14,11 +14,9 @@ let urlQueryCacheKey = "urlQueryCacheKey"
 
 class ViewController: UIViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
     
     @IBAction func queryItems(_ sender: Any) {
         queryItems()

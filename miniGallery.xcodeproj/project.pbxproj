@@ -92,10 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B1B93CA2414C063006C8B3F /* Build configuration list for PBXNativeTarget "miniGallery" */;
 			buildPhases = (
+				5B71E179241606EE0042F7EB /* Swift Lint */,
 				5B1B93B22414C062006C8B3F /* Sources */,
-				5BF4CEAF2415EC9C00399C3E /* Copy Carthage-built Frameworks */,
 				5B1B93B32414C062006C8B3F /* Frameworks */,
 				5B1B93B42414C062006C8B3F /* Resources */,
+				5BF4CEAF2415EC9C00399C3E /* Copy Carthage-built Frameworks */,
 				5BFED6C2241522AF00E8E62F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -155,6 +156,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5B71E179241606EE0042F7EB /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		5BF4CEAF2415EC9C00399C3E /* Copy Carthage-built Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
