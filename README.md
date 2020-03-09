@@ -1,5 +1,8 @@
 # MiniGallery
 ## a mini gallery project
+
+![](Mar-09-2020_14-12-01.gif)
+
 ### to get started, run 
 `carthage bootstrap`
 
