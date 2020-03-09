@@ -3,7 +3,7 @@
 
 ![](Mar-09-2020_14-12-01.gif)
 
-###Get Started
+### Get Started
 Install [Carthage](https://github.com/Carthage/Carthage) if you havn't already
 
 To get started, run
