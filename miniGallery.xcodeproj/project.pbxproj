@@ -93,9 +93,9 @@
 			buildConfigurationList = 5B1B93CA2414C063006C8B3F /* Build configuration list for PBXNativeTarget "miniGallery" */;
 			buildPhases = (
 				5B1B93B22414C062006C8B3F /* Sources */,
+				5BF4CEAF2415EC9C00399C3E /* Copy Carthage-built Frameworks */,
 				5B1B93B32414C062006C8B3F /* Frameworks */,
 				5B1B93B42414C062006C8B3F /* Resources */,
-				5BF4CEAF2415EC9C00399C3E /* Copy Carthage-built Frameworks */,
 				5BFED6C2241522AF00E8E62F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -349,8 +349,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = miniGallery/miniGallery.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T93947JGD5;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = miniGallery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -359,6 +359,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.danfu.miniGallery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
